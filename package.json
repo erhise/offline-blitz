@@ -6,7 +6,8 @@
   "scripts": {
     "blitz": "cp templates/app.template.ts src/app.ts && ./node_modules/ts-node/dist/bin.js src/app.ts",
     "sandbox": "nodemon --quiet --config nodemon.json src/app.ts",
-    "copy:default": "cp templates/app.template.ts src/app.ts"
+    "copy:default": "cp templates/app.template.ts src/app.ts",
+    "copy:rxjs": "cp templates/rxjs.template.ts src/app.ts"
   },
   "repository": {
     "type": "git",
