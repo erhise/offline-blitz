@@ -4,7 +4,7 @@
   "description": "1. clone repo 2. install dependencies 3. run script 4. clean app.ts",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "blitz": "cp template/app.template.ts src/app.ts && ./node_modules/ts-node/dist/bin.js src/app.ts"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/erhise/offline-blitz/issues"
   },
-  "homepage": "https://github.com/erhise/offline-blitz#readme"
+  "homepage": "https://github.com/erhise/offline-blitz#readme",
+  "dependencies": {
+    "nodemon": "^2.0.7",
+    "rxjs": "^6.6.3",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.2"
+  }
 }
