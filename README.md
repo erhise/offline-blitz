@@ -2,6 +2,7 @@
 1. clone repo
 2. install dependencies
 3. run script
+4. clean app.ts
 
 package.json:
 ```
