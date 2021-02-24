@@ -7,7 +7,7 @@
 package.json:
 ```
 scripts: {
-  "run": // run environment in terminal for console log (run app.ts)
+  "run": // run environment in terminal for console log (run app.ts),
 }
 dependencies: {
   "rxjs",
