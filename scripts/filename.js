@@ -1,12 +1,19 @@
 const fs = require('fs');
 
-function fileName(name, checkAvail = true) {
-  if (name !== undefined) {
-    const fileName = `src/${name}.ts`;
-    if (checkAvail === false || fs.existsSync(`${__dirname}/../${fileName}`) === true) {
-      return fileName;
-    }
-  }
-  return 'src/app.ts';
+function fileName(name) {
+  return name !== undefined ? `src/${name}.ts` : 'src/app.ts';
 }
-module.exports = { fileName };
+
+function ensureValidPath(path) {
+  if (fs.existsSync(path) === true) {
+    return path;
+  } else {
+    fs.copyFileSync('templates/app.template.ts', 'src/app.ts');
+    return 'src/app.ts';
+  }
+}
+
+module.exports = {
+  fileName,
+  ensureValidPath,
+};
