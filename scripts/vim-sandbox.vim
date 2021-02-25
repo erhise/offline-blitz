@@ -1,2 +1,2 @@
-:vs|:term npm run sandbox
+:vs|:term npm run sandbox %:t:r
 :wincmd h
