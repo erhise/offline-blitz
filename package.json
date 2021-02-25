@@ -4,8 +4,9 @@
   "description": "Simple sandbox to run code locally",
   "main": "index.js",
   "scripts": {
-    "sandbox": "nodemon --quiet --config nodemon.json src/app.ts",
+    "sandbox": "node index.js",
     "vim": "vim -s scripts/vim-sandbox.vim src/app.ts",
+    "nvim": "nvim -s scripts/vim-sandbox.vim src/app.ts",
     "copy:default": "cp templates/app.template.ts src/app.ts",
     "copy:rxjs": "cp templates/rxjs.template.ts src/app.ts"
   },
