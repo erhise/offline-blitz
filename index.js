@@ -1,13 +1,7 @@
-const { fileName } = require('./scripts/filename');
-const fs = require('fs');
+const { ensureValidPath, fileName } = require('./scripts/filename');
 const nodemon = require('nodemon');
 
-const path = fileName(process.argv[2]);
-
-// ensure there are at least something to run
-if (path === 'src/app.ts' && fs.existsSync('src/app.ts') === false) {
-  fs.copyFileSync('templates/app.template.ts', 'src/app.ts');
-}
+const path = ensureValidPath(fileName(process.argv[2]));
 
 nodemon(`--quiet --config nodemon.json ${path}`);
 
