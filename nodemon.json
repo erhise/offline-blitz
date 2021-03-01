@@ -1,6 +1,6 @@
 {
   "restartable": "rs",
-  "ignore": [".git", "node_modules/", "dist/", "coverage/"],
+  "ignore": [".git", "node_modules/", "coverage/"],
   "watch": ["src/"],
   "execMap": {
     "ts": "TS_NODE_FILES=true TS_NODE_TRANSPILE_ONLY=true ts-node"
