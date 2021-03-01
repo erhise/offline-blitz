@@ -9,6 +9,7 @@
     "nvim": "node scripts/run-vim.js nvim",
     "copy:default": "node scripts/copy.js app",
     "copy:rxjs": "node scripts/copy.js rxjs",
+    "copy:example": "node scripts/copy.js example",
     "build": "tsc"
   },
   "repository": {
