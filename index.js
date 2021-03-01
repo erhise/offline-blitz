@@ -13,4 +13,6 @@ nodemon.on('start', () => {
 }).on('restart', (files) => {
   console.clear();
   console.log('restarted', new Date().toISOString(), files);
+}).once('exit', () => {
+  process.exit(0);
 });
