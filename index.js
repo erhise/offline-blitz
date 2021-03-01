@@ -3,7 +3,7 @@ const nodemon = require('nodemon');
 
 const path = ensureValidPath(fileName(process.argv[2]));
 
-nodemon(`--quiet --config nodemon.json ${path}`);
+nodemon(`-I --quiet --config nodemon.json ${path}`);
 
 nodemon.on('start', () => {
   console.clear();

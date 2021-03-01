@@ -10,8 +10,7 @@
     "noUnusedParameters": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "dist/"
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules", "templates"]
 }
