@@ -4,11 +4,14 @@ const child_process = require('child_process');
 
 const path = ensureValidPath(fileName(process.argv[2]));
 
+function logger(msg) {
+  console.clear();
+  console.log(new Date(), msg);
+}
+
 let sandbox;
 
 function startSandbox() {
-  console.clear();
-  console.log(new Date(), "sandbox starting");
   sandbox = child_process.spawn('ts-node', [path], {
     stdio: 'inherit'
   });
@@ -21,8 +24,10 @@ function startSandbox() {
 }
 
 chokidar.watch(path).on('change', () => {
+  logger('sandbox restarting');
   sandbox.kill();
   startSandbox();
 });
 
+logger('sandbox starting');
 startSandbox();
