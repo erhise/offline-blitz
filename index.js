@@ -18,12 +18,12 @@ function startSandbox() {
   sandbox.on('exit', (exitCode) => {
     if (exitCode === 130) {
       console.log(new Date(), "sandbox aborting");
-      process.exit(0);
+      watcher.close().then(() => process.exit(0));
     }
   });
 }
 
-chokidar.watch(path).on('change', () => {
+const watcher = chokidar.watch(path).on('change', () => {
   logger('sandbox restarting');
   sandbox.kill();
   startSandbox();
