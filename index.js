@@ -1,33 +1,15 @@
 const { ensureValidPath, fileName } = require('./scripts/filename');
-const chokidar = require('chokidar');
 const child_process = require('child_process');
 
-const path = ensureValidPath(fileName(process.argv[2]));
+const interactive = process.argv[2] === 'interactive';
+const path = ensureValidPath(fileName(interactive ? process.argv[3] : process.argv[2]));
 
-function logger(msg) {
-  console.clear();
-  console.log(new Date(), msg);
+const FLAGS = ['--quiet', '--clear', '--exit-child', '--transpile-only'];
+
+if (!interactive) {
+    FLAGS.push('--respawn');
 }
 
-let sandbox;
-
-function startSandbox() {
-  sandbox = child_process.spawn('ts-node', [path], {
+child_process.spawn('ts-node-dev', [...FLAGS, path], {
     stdio: 'inherit'
-  });
-  sandbox.on('exit', (exitCode) => {
-    if (exitCode === 130) {
-      console.log(new Date(), "sandbox aborting");
-      watcher.close().then(() => process.exit(0));
-    }
-  });
-}
-
-const watcher = chokidar.watch(path).on('change', () => {
-  logger('sandbox restarting');
-  sandbox.kill();
-  startSandbox();
 });
-
-logger('sandbox starting');
-startSandbox();
