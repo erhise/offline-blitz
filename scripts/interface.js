@@ -59,7 +59,7 @@ function buildUi(data = {}) {
     },
     columnSpacing: 1,
   });
-  
+
   // Create exeuction triggered log
   executionLog = grid.set(15, 0, 21, 4, contrib.log, {
     label: 'Execution triggered',
@@ -68,7 +68,7 @@ function buildUi(data = {}) {
     selectedBg: 'blue',
     padding: { left: 1, right: 1 },
   });
-  
+
   actions = data.actions !== undefined ? data.actions : DEFAULT_DATA.actions;
   actionList.setItems(actions.map(action => action.title));
 
@@ -80,7 +80,6 @@ function buildUi(data = {}) {
     selectedFg: 'green',
   });
 
-  
   // focus list directly
   actionList.focus();
   screen.render();
@@ -90,7 +89,7 @@ function buildMenuCommands(extras = {}) {
   let defaultCmds = {
     ' Exit': {
       keys: ['Q-q', 'Q', 'q', 'C-c', 'escape'],
-      callback: () => process.exit(0),
+      callback: () => process.exit(130),
     },
     ' Action': {
       keys: ['n', 'enter'],

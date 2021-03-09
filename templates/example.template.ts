@@ -1,6 +1,6 @@
 import { merge, NEVER, Subject, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-const { logObject, buildUi } = require('../scripts/interface');
+const { logObject, buildUi } = require('./scripts/interface');
 
 const extras = { 
   ' Info': {
