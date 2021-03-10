@@ -1,10 +1,10 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function fileName(name) {
+export function fileName(name: string) {
   return name !== undefined ? `src/${name}.ts` : 'src/app.ts';
 }
 
-function ensureValidPath(path) {
+export function ensureValidPath(path: string) {
   if (fs.existsSync(path) === true) {
     return path;
   } else {
@@ -13,7 +13,3 @@ function ensureValidPath(path) {
   }
 }
 
-module.exports = {
-  fileName,
-  ensureValidPath,
-};

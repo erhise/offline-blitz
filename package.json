@@ -2,20 +2,29 @@
   "name": "offline-blitz",
   "version": "1.0.0",
   "description": "Sandboxing unplugged",
-  "main": "index.js",
+  "main": ".lib/index.js",
+  "bin": {
+    "offline-blitz": "./bin/offline-blitz"
+  },
   "scripts": {
-    "sandbox": "node index.js",
-    "vim": "node scripts/run-vim.js vim",
-    "nvim": "node scripts/run-vim.js nvim",
-    "copy:default": "node scripts/copy.js app",
-    "copy:rxjs": "node scripts/copy.js rxjs",
-    "copy:example": "node scripts/copy.js example"
+    "build": "tsc -p .",
+    "global": "npm i -g && offline-blitz",
+    "sandbox": "node ./lib/index.js",
+    "vim": "node ./lib/scripts/run-vim.js vim",
+    "nvim": "node ./lib/scripts/run-vim.js nvim"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/erhise/offline-blitz.git"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "sandbox",
+    "terminal",
+    "typescript",
+    "javascript",
+    "nodejs"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -29,6 +38,7 @@
     "typescript": "^4.2.2"
   },
   "devDependencies": {
+    "@types/blessed": "^0.1.17",
     "@types/node": "^14.14.31",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.21"
