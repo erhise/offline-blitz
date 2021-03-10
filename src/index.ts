@@ -1,8 +1,8 @@
-const { ensureValidPath, fileName } = require('./scripts/filename');
-const { register } = require('ts-node');
-const { watch } = require('chokidar');
-const { readFileSync } = require('fs');
-const { fork } = require('child_process');
+import { readFileSync } from 'fs';
+import { watch } from 'chokidar';
+import { register } from 'ts-node';
+import { fork } from 'child_process';
+import { ensureValidPath, fileName } from './scripts/filename';
 
 const path = ensureValidPath(fileName(process.argv[2]));
 
@@ -13,7 +13,7 @@ const tsCompiler = register({
 
 blitz(path, tsCompiler);
 
-function blitz(filePath, compiler) {
+function blitz(filePath: any, compiler: any) {
   logger('sandbox starting', filePath);
   let sandbox = runSandbox(filePath, compiler);
   watch(filePath).on('change', (changedPath) => {
@@ -25,17 +25,17 @@ function blitz(filePath, compiler) {
   });
 }
 
-function logger(...msg) {
+function logger(...msg: string[]) {
   console.clear();
   console.log(new Date(), ...msg);
 }
 
-function runSandbox(filePath, compiler) {
+function runSandbox(filePath: string, compiler: any) {
   const code = compile(filePath, compiler);
   return code !== null ? newSandbox(code) : null;
 }
 
-function compile(filePath, { compile }) {
+function compile(filePath: string, { compile }: any) {
   const code = readFileSync(filePath, 'utf-8');
   try {
     return compile(code, filePath);
@@ -45,23 +45,25 @@ function compile(filePath, { compile }) {
   return null;
 }
 
-function newSandbox(code) {
-  const sandbox = fork('eval.js');
+function newSandbox(code: any) {
+  const sandbox = fork('lib/eval.js');
   sandbox.on('message', onExecutionError(sandbox));
   sandbox.on('exit', onSandboxAborted(sandbox));
-  sandbox.send(code);
+  if (sandbox.send !== undefined) {
+    sandbox.send(code);
+  }
   return sandbox;
 }
 
-function onExecutionError(sandbox) {
-  return (executionError) => {
+function onExecutionError(sandbox: any) {
+  return (executionError: Error) => {
     console.log('Execution error:\n', executionError);
     sandbox.kill();
   };
 }
 
-function onSandboxAborted(sandbox) {
-  return (exitCode) => {
+function onSandboxAborted(sandbox: any) {
+  return (exitCode: any) => {
     if (exitCode === 130) {
       sandbox.kill();
       process.exit(0);

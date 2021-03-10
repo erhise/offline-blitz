@@ -2,14 +2,15 @@
   "name": "offline-blitz",
   "version": "1.0.0",
   "description": "Simple sandbox to run code locally",
-  "main": "index.js",
+  "main": ".lib/index.js",
   "scripts": {
-    "sandbox": "node index.js",
-    "vim": "node scripts/run-vim.js vim",
-    "nvim": "node scripts/run-vim.js nvim",
-    "copy:default": "node scripts/copy.js app",
-    "copy:rxjs": "node scripts/copy.js rxjs",
-    "copy:example": "node scripts/copy.js example"
+    "build": "tsc -p .",
+    "sandbox": "node ./lib/index.js",
+    "vim": "node ./lib/scripts/run-vim.js vim",
+    "nvim": "node ./lib/scripts/run-vim.js nvim",
+    "copy:default": "node ./lib/scripts/copy.js app",
+    "copy:rxjs": "node ./lib/scripts/copy.js rxjs",
+    "copy:example": "node ./lib/scripts/copy.js example"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "typescript": "^4.2.2"
   },
   "devDependencies": {
+    "@types/blessed": "^0.1.17",
     "@types/node": "^14.14.31",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.21"

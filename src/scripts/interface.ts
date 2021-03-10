@@ -1,10 +1,17 @@
-const blessed = require('blessed');
-const contrib = require('blessed-contrib');
-const util = require('util');
+import blessed from 'blessed';
+import contrib from 'blessed-contrib';
+import util from 'util';
 
 const DEFAULT_DATA = { actions: [], extras: {} };
 
-function buildUi(data = {}) {
+var screen: any,
+  actions: any,
+  grid: any,
+  executionLog: any,
+  log: any,
+  actionList: any;
+
+export function buildUi(data: any = {}) {
   screen = blessed.screen({
     title: 'Offline Blitz',
   });
@@ -16,8 +23,8 @@ function buildUi(data = {}) {
     screen: screen,
   });
 
-  // Create menu
-  menubar = blessed.listbar({
+  // Create menubar
+  blessed.listbar({
     parent: screen,
     keys: true,
     bottom: 0,
@@ -31,10 +38,15 @@ function buildUi(data = {}) {
         fg: "yellow"
       }
     },
+    items: [],
+    commands: [],
+    autoCommandKeys: false,
+    /*
     commands: buildMenuCommands({
       ...DEFAULT_DATA.extras,
       ...data.extras
     }),
+    */
   });
 
   // Create list for actions
@@ -70,7 +82,7 @@ function buildUi(data = {}) {
   });
 
   actions = data.actions !== undefined ? data.actions : DEFAULT_DATA.actions;
-  actionList.setItems(actions.map(action => action.title));
+  actionList.setItems(actions.map((action: any) => action.title));
 
   //grid.set(row, col, rowSpan, colSpan, obj, opts)
   log = grid.set(0,4,35,8, contrib.log, {
@@ -85,6 +97,7 @@ function buildUi(data = {}) {
   screen.render();
 }
 
+/*
 function buildMenuCommands(extras = {}) {
   let defaultCmds = {
     ' Exit': {
@@ -103,13 +116,10 @@ function buildMenuCommands(extras = {}) {
   };
   return {...defaultCmds, ...extras};
 }
+*/
 
-number = 0;
-function logObject(object) {
+var number = 0;
+export function logObject(object: Object) {
   log.log(`${number++}: ${util.inspect(object, false, null, true)}`);
 }
 
-module.exports = {
-  logObject,
-  buildUi,
-};
