@@ -9,9 +9,7 @@
   "scripts": {
     "build": "tsc -p .",
     "global": "npm i -g && offline-blitz",
-    "sandbox": "node ./lib/index.js",
-    "vim": "node ./lib/scripts/run-vim.js vim",
-    "nvim": "node ./lib/scripts/run-vim.js nvim"
+    "sandbox": "node ./lib/index.js"
   },
   "repository": {
     "type": "git",
