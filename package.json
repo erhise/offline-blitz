@@ -1,7 +1,7 @@
 {
   "name": "offline-blitz",
   "version": "1.0.0",
-  "description": "Simple sandbox to run code locally",
+  "description": "Sandboxing unplugged",
   "main": "index.js",
   "scripts": {
     "sandbox": "node index.js",
