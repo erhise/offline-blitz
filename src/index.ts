@@ -1,10 +1,17 @@
-const { ensureValidPath, fileName } = require('./scripts/filename');
-const { register } = require('ts-node');
-const { watch } = require('chokidar');
-const { readFileSync } = require('fs');
-const { fork } = require('child_process');
+import { watch } from 'chokidar';
+import { ChildProcess, fork } from 'child_process';
+import { readFileSync } from 'fs';
+import { register, Service } from 'ts-node';
+import { resolvePath, fileName, extendWorkingDirectory } from './filename';
 
-const path = ensureValidPath(fileName(process.argv[2]));
+type TSCompiler = Service;
+
+const path = resolvePath(
+  extendWorkingDirectory(
+    process.cwd(),
+    fileName(process.argv[2])
+  )
+);
 
 const tsCompiler = register({
   scope: true,
@@ -13,7 +20,7 @@ const tsCompiler = register({
 
 blitz(path, tsCompiler);
 
-function blitz(filePath, compiler) {
+function blitz(filePath: string, compiler: TSCompiler) {
   logger('sandbox starting', filePath);
   let sandbox = runSandbox(filePath, compiler);
   watch(filePath).on('change', (changedPath) => {
@@ -25,43 +32,45 @@ function blitz(filePath, compiler) {
   });
 }
 
-function logger(...msg) {
+function logger(...msg: string[]) {
   console.clear();
   console.log(new Date(), ...msg);
 }
 
-function runSandbox(filePath, compiler) {
+function runSandbox(filePath: string, compiler: TSCompiler) {
   const code = compile(filePath, compiler);
   return code !== null ? newSandbox(code) : null;
 }
 
-function compile(filePath, { compile }) {
+function compile(filePath: string, compiler: TSCompiler) {
   const code = readFileSync(filePath, 'utf-8');
   try {
-    return compile(code, filePath);
+    return compiler.compile(code, filePath);
   } catch (compilationError)  {
     console.log('Compilation error:\n', compilationError);
   }
   return null;
 }
 
-function newSandbox(code) {
-  const sandbox = fork('eval.js');
+function newSandbox(code: string) {
+  const sandbox = fork(__dirname + '/eval.js');
   sandbox.on('message', onExecutionError(sandbox));
   sandbox.on('exit', onSandboxAborted(sandbox));
-  sandbox.send(code);
+  if (sandbox.send !== undefined) {
+    sandbox.send(code);
+  }
   return sandbox;
 }
 
-function onExecutionError(sandbox) {
-  return (executionError) => {
+function onExecutionError(sandbox: ChildProcess) {
+  return (executionError: Error) => {
     console.log('Execution error:\n', executionError);
     sandbox.kill();
   };
 }
 
-function onSandboxAborted(sandbox) {
-  return (exitCode) => {
+function onSandboxAborted(sandbox: ChildProcess) {
+  return (exitCode: number) => {
     if (exitCode === 130) {
       sandbox.kill();
       process.exit(0);

@@ -2,6 +2,8 @@ process.on('message', (code) => {
   try {
     eval(code);
   } catch (executionError) {
-    process.send(executionError.toString());
+    if (process.send !== undefined) {
+      process.send(executionError.toString());
+    }
   }
 });
