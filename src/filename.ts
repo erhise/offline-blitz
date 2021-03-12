@@ -1,9 +1,8 @@
 import fs from 'fs';
 
-// TODO: check for other file extension
 // TODO: this temporary defaults to examples folder test file
-export function fileName(name: string = 'examples/test-file') {
-  return `${name}.ts`;
+export function fileName(name: string = 'examples/test-file.ts') {
+  return name;
 }
 
 export function extendWorkingDirectory(
