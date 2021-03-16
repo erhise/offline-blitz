@@ -1,6 +1,6 @@
-process.on('message', (code) => {
+process.on('message', ({ code, repl }) => {
   try {
-    eval(code);
+    repl.evalCode(code);
   } catch (executionError) {
     if (process.send !== undefined) {
       process.send(executionError.toString());
