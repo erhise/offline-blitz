@@ -32,13 +32,14 @@ if (process.argv[2] === undefined) {
 const filePath = process.argv[2];
 
 // Get a new repl instance.
-let repl: ReplService = getRepl(filePath);
+const repl: ReplService = getRepl(filePath);
 
 // Listen for code to run in sandbox.
 process.on('message', ({ code }) => {
   if (code !== undefined) {
     try {
       // Run sandbox with provided code.
+      console.log(new Date().toISOString(), "sandbox running");
       repl.evalCode(code);
     } catch (executionError) {
       // Catch any execution error and pass on to parent process.

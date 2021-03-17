@@ -23,4 +23,4 @@ const path = resolvePath(
   )
 );
 
-blitz(path);
+blitz(path, args['--no-gui']);
