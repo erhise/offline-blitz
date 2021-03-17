@@ -1,5 +1,5 @@
-import { Writable } from 'stream';
 import { fork, ChildProcess } from 'child_process';
+import { Writable } from 'stream';
 
 export class SandboxManager {
   private readySandbox: ChildProcess;
@@ -19,11 +19,13 @@ export class SandboxManager {
       this.runningSandbox.kill();
     }
     // Send code to be run to the ready sandbox and swap it to a newly created one.
-    if (this.readySandbox.send !== undefined) {
-      this.readySandbox.send({ code });
-      this.runningSandbox = this.readySandbox;
-      this.readySandbox = this.newSandbox();
-    }
+    this.readySandbox.send!({ code });
+    this.runningSandbox = this.readySandbox;
+    this.readySandbox = this.newSandbox();
+  }
+
+  public runAction(action: string) {
+    this.runningSandbox?.send({ action });
   }
 
   public tearDown(): void {
@@ -47,9 +49,11 @@ export class SandboxManager {
 
   private onExecutionError(sandbox: ChildProcess) {
     // Display error and kill sandbox on execution error.
-    return (executionError: Error) => {
-      console.log('Execution error:\n', executionError);
-      sandbox.kill();
+    return ({ executionError }) => {
+      if (executionError !== undefined) {
+        this.log.write('=============\n\nSandbox execution error:\n' + executionError);
+        sandbox.kill();
+      }
     };
   }
 
@@ -61,5 +65,4 @@ export class SandboxManager {
     }
   }
 }
-
 
