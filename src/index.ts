@@ -12,10 +12,14 @@ const args = arg({
   '-c': '--config'
 });
 
+if (args._[0] === undefined) {
+  console.log("Usage: offline-blitz [<options>] <filename>");
+  process.exit(1);
+}
 const path = resolvePath(
   extendWorkingDirectory(
     process.cwd(),
-    fileName(process.argv[2])
+    fileName(args._[0])
   )
 );
 
