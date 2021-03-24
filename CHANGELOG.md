@@ -1,3 +1,7 @@
+## [0.1.2](https://github.com/erhise/offline-blitz/compare/0.1.1...0.1.2) (2021-03-24)
+
+
+
 ## [0.1.1](https://github.com/erhise/offline-blitz/compare/0.1.0...0.1.1) (2021-03-24)
 
 
