@@ -19,6 +19,15 @@
 
 * Run sandbox tests
 
+See [CHANGELOG](CHANGELOG.md) for latest features/fixes.
+
+## Dependencies (and why they are needed)
+
+* chokidar: watch files for changes
+* ts-node: compile and run typescript code
+* blessed: interactive ui
+* arg: parse command line arguments
+
 ## How To Use
 To run this application. From your command line:
 
