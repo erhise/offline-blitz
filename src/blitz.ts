@@ -1,31 +1,37 @@
-import { watch } from 'chokidar';
 import { readFileSync } from 'fs';
+import { watch } from 'chokidar';
 import { SandboxManager } from './sandbox-manager';
+import { initUi } from './sandbox-ui';
 
-export function blitz(filePath: string) {
-  logger('sandbox starting', filePath);
+export function blitz(filePath: string, { noGui, actions }) {
+  // Set standard out to either terminal or ui output
+  const { log, clearLog, uiEvent = undefined } =
+    !noGui
+    ? initUi(actions)
+    : { log: process.stdout, clearLog: console.clear };
 
   // Instantiate sandbox manager and use it to run file.
-  const sandboxMgr: SandboxManager = new SandboxManager(filePath);
-  runSandbox(filePath, sandboxMgr);
+  const sandboxMgr: SandboxManager = new SandboxManager(filePath, log, clearLog);
 
-  // Watch file for changes and run it when change.
+  // Watch file for changes and run it when changed.
   // @TODO: Watch imported files for changes as well.
+  runSandbox(filePath, sandboxMgr);
   const watcher = watch(filePath).on('change', (changedPath) => {
-    logger('sandbox restarting', changedPath);
     runSandbox(changedPath, sandboxMgr);
   });
 
-  // Clean up the sandbox manager and wather on exit.
+  if (uiEvent !== undefined) {
+    // Run action in sandbox on ui event
+    uiEvent.on('action', (action) => sandboxMgr.runAction(action));
+    // Restart sandbox on restart ui event.
+    uiEvent.on('restart', () => runSandbox(filePath, sandboxMgr));
+  }
+
+  // Clean up the sandbox manager and watcher on exit.
   process.on('exit', () => {
     sandboxMgr.tearDown()
     watcher.close();
   });
-}
-
-function logger(...msg: string[]) {
-  console.clear();
-  console.log(new Date(), ...msg);
 }
 
 function runSandbox(filePath: string, sandboxMgr: SandboxManager) {

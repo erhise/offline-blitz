@@ -32,19 +32,23 @@ if (process.argv[2] === undefined) {
 const filePath = process.argv[2];
 
 // Get a new repl instance.
-let repl: ReplService = getRepl(filePath);
+const repl: ReplService = getRepl(filePath);
 
 // Listen for code to run in sandbox.
-process.on('message', ({ code }) => {
-  if (code !== undefined) {
-    try {
+process.on('message', ({ code, action }) => {
+  try {
+    if (code !== undefined) {
       // Run sandbox with provided code.
+      console.log(new Date().toISOString(), "sandbox running");
       repl.evalCode(code);
-    } catch (executionError) {
-      // Catch any execution error and pass on to parent process.
-      if (process.send !== undefined) {
-        process.send(executionError.toString());
-      }
+    } else if (action !== undefined) {
+      // Run action from the running code.
+      repl.evalCode(`${action}();`);
+    }
+  } catch (executionError) {
+    // Catch any execution error and pass on to parent process.
+    if (process.send !== undefined) {
+      process.send({ executionError: executionError.toString() });
     }
   }
 });

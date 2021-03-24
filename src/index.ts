@@ -2,13 +2,20 @@ import arg from 'arg';
 import { blitz } from './blitz';
 import { resolvePath, fileName, extendWorkingDirectory } from './filename';
 
+function getActionList(args: Array<string>) {
+  return args.reduce<Array<string>>((actions, action) => {
+    actions.push(...action.split(','));
+    return actions;
+  }, []);
+}
+
 const args = arg({
   '--no-gui': Boolean,
-  '--actions': String,
+  '--action': [String],
   '--config': String,
 
   '-n': '--no-gui',
-  '-a': '--actions',
+  '-a': '--action',
   '-c': '--config'
 });
 
@@ -23,4 +30,9 @@ const path = resolvePath(
   )
 );
 
-blitz(path);
+const options = {
+  noGui: args['--no-gui'] === true,
+  actions: args['--action'] !== undefined ? getActionList(args['--action']) : undefined
+};
+
+blitz(path, options);
