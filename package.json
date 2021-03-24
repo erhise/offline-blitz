@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "global": "npm i -g && offline-blitz",
+    "global": "npm i -g",
     "sandbox": "node ./lib/index.js"
   },
   "repository": {
