@@ -1,3 +1,12 @@
+## [0.1.1](https://github.com/erhise/offline-blitz/compare/0.1.0...0.1.1) (2021-03-24)
+
+
+### Bug Fixes
+
+* include necessary files in tarball ([b2923bd](https://github.com/erhise/offline-blitz/commit/b2923bd1fa7464666cc93745ba68f583c11b1248))
+
+
+
 # 0.1.0 (2021-03-23)
 
 
