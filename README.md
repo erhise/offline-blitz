@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="/img/offline-blitz.png" alt="offline-blitz">
+  <img src="https://github.com/erhise/offline-blitz/blob/master/img/offline-blitz.png" alt="offline-blitz">
   <br>
   offline-blitz
   <br>
@@ -27,8 +27,11 @@ $ npm install -g offline-blitz
 # Run sandbox
 $ offline-blitz <filename>
 
-# Use with vim
-$ vim ...
+# Edit the code with your favorite editor
+$ vim <filename>
+
+# Run terminal in a vim split
+vim -s <(echo ":vs|:term offline-blitz -a <action> %") <filename>
 ```
 
 ### Options
@@ -88,6 +91,9 @@ $ offline-blitz -n <filename>
 * ~Enable interactive gui~
 * ~Enable to use provided actions~
 #### 0.3.0
+* Add `-h, --help` argument to list all available options.
+* Improve documentations. Provide more examples/use cases.
+* Improve public api for locally installed offline-blitz package.
 * ...
 
 ## Dependencies
