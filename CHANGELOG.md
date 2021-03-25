@@ -1,3 +1,13 @@
+# [0.2.0](https://github.com/erhise/offline-blitz/compare/0.1.2...0.2.0) (2021-03-25)
+
+
+### Features
+
+* enable ui by default, actions from argv ([e546abd](https://github.com/erhise/offline-blitz/commit/e546abd239859a061a60d543b482fe23a072ff90))
+* use --no-gui flag to run sandbox with/without gui ([6cd80f2](https://github.com/erhise/offline-blitz/commit/6cd80f2f8b30a5899531a0423670a3540b97ef35))
+
+
+
 ## [0.1.2](https://github.com/erhise/offline-blitz/compare/0.1.1...0.1.2) (2021-03-24)
 
 

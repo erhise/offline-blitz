@@ -1,6 +1,6 @@
 {
   "name": "offline-blitz",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Sandboxing unplugged",
   "main": ".lib/index.js",
   "bin": {
